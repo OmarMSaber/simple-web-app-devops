@@ -1,0 +1,11 @@
+{
+  "name": "simple-web-app",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Demo app for Web container demonstrations",
+  "main": "app.js",
+  "dependencies": {
+    "express": "4.16.3",
+    "pug": "2.0.3"
+  }
+}
