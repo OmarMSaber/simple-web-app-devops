@@ -29,6 +29,18 @@ This repo Demonstrates the set up and Deployment of a simple node app using Jenk
 5. run kops create with --yes option and specify the needed options
 6. check if cluster is healthy with kops validate cluster
 
+### Set up Deployment Environment Using Terraform
+
+1. Download needed tools (Kubectl , aws-cli , terraform , kops)
+2. Create an s3 bucket to hold KOPS_STATE_STORE variable and export 
+   `export KOPS_STATE_STORE=s3://<kops_state_bucket>` # Get this values from test.tfvars
+3. Execute `terraform init` to initialize terraform configurations and download dependencies
+4. Execute `terraform plan -var-file=test.tfvars`
+5. Execute `terraform apply -var-file=config/${env}.tfvars` and answer `yes` when prompted.
+6. Once terraform is done you can check the state of the cluster with: `kops validate cluster`
+8. For example `kubectl get nodes` 
+9. To destroy the environment simply run `terraform destroy -var-file=config/${env}.tfvars` and answer `yes` when prompted.
+
 ### Set up Kubernetes cluster
 1. when cluster is up apply the web-deploy.yml (web-deploy.yml pulls previously built container and deploys it creating 3 replicas)
 2. To allow the Web app to reached from outside a svc should be deployed , use web-lb.yml to deploy a loadbalancer on aws which would connect to kubernetes svc exposing port 80
