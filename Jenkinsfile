@@ -1,11 +1,7 @@
 def awsCredentials = [[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-personal']]
 
 pipeline {
-  agent {
-    node {
-      label 'test-EC2'
-    }
-  }
+  agent none
 
   options {
     disableConcurrentBuilds()
@@ -14,26 +10,35 @@ pipeline {
   }
 
   stages {
-    stage('Build') {
+   stage('Build') {
+     agent {
+       node {
+         label 'test-EC2'
+        }
+      }
       steps{
             echo "build Stage"
           }
-        }
+       }
     stage('Test') {
-          steps {
+     agent {
+       node {
+         label 'test-EC2'
+        }
+       }
+       steps {
             echo "Test Stage"
           }
         }
     stage('Deploy') {
+      agent {
+        node {
+          label 'Deployment-EC2'
+         }
+        }
       steps {
         echo "Deploy Stage"
       }
-    }
-  }
-
-  post {
-    always {
-      cleanWs()
     }
   }
 }
