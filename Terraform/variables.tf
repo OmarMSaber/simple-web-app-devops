@@ -1,0 +1,3 @@
+variable "kops_cluster" {
+
+}
