@@ -1,0 +1,5 @@
+- hosts: Jenkins-Nodes
+  become: yes
+  tasks:
+    - name: run Node.js
+      shell: node ./app.js
