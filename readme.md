@@ -12,6 +12,35 @@ This repo Demonstrates the set up and Deployment of a simple node app using Jenk
 4. Push image to container registry
 5. Run container/Pod using the created image
 
+### Create MySQL DB to work as SonarQube Database
+1. Download Mysql if you want to run on local machine
+2. create an AWS RDS if you want to use cloud architecture don't forget to allow security group to access SonarQube server
+
+
+### Install SonarQube Server on a node (EC2 Instance)
+1. Install SonarQube from https://www.sonarqube.org/downloads/
+2. unzip SonarQube in /opt/sonar
+3. install mysql client
+4. connect to DB `mysql -h <RDS_Instance_endpoint>:3306 -u <DB_USER_NAME> -p <DB_PASSWORD> `
+5. Create a new sonar database, local and remote users and give them access permissions
+6. on SonarQube Server machine enable SonarQube properties file to connect his Database.
+7. in file:opt/sonar/conf/sonar.properties under mysql configurations
+  sonar.jdbc.username=sonar
+  sonar.jdbc.password=sonar
+  sonar.jdbc.url=jdbc:mysql://<RDS_DATABAE_ENDPOINT>:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false
+  sonar.web.host=0.0.0.0
+  sonar.web.context=/sonar
+8. Implement SonarQube server as a service `sudo cp /opt/sonar/bin/linux-x86-64/sonar.sh /etc/init.d/sonar`
+9. edit etc/init.d/sonar file
+`SONAR_HOME=/opt/sonar
+PLATFORM=linux-x86-64
+
+WRAPPER_CMD="${SONAR_HOME}/bin/${PLATFORM}/wrapper"
+WRAPPER_CONF="${SONAR_HOME}/conf/wrapper.conf"
+PIDDIR="/var/run"`
+10. Start SonarQube service
+
+
 ### Set Up Jenkins nodes (AWS EC2 Instances)
 1. Launch EC2 instance as a build node with tag test-EC2
 2. Launch EC2 instance as a Deployment node with tag Deployment-EC2
@@ -20,6 +49,12 @@ This repo Demonstrates the set up and Deployment of a simple node app using Jenk
 1. On Your Jenkins Server set up your aws credentials by adding new credentials using Cloudbees AWS credentials plug-in
 2. On Your Jenkins Server add the previous 2 nodes as Cloud Nodes using Cloudbees EC2 plug-in w
 3. Add a new Job specifying this github repo to use the Jenkinsfile
+4. On Jenkins Server Install SonarQube Scanner
+5. Set SonarQube server details in sonar-scanner property file:  /opt/sonar_scanner/conf/sonar-scanner.properties
+sonar.host.url=http://<SONAR_SERVER_IP>:9000 (localhost if Sonar server is on the same machine)
+6. Install SonarQube scanner plugin and configure SONAR_RUNNER_HOME
+
+
 
 ### Set Up Deployment Environments
 1. Connect to the Deployment EC2 instance to download the environment
