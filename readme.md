@@ -2,6 +2,20 @@
 
 This repo Demonstrates the set up and Deployment of a simple node app using Jenkins as CI/CD server , SonarQube as Static Analysis server with MySQL RDS database connected, Docker as Container Manager , AWS EC2 for Building and Deployment Environments , Kubernetes to run and manage Deployment cluster
 
+# Architecture Diagram
+
+![alt text](https://drive.google.com/file/d/18ALGOf_4FSLUFGbcuMMSxCbrB4RVjKlH/view?usp=sharing)
+
+# Deployment Model
+
+- Source Code Management  (github)
+- Jenkins (CI/CD Server)
+- SonarQube (Static Analysis Server)
+- RDS MySQL (Connected to SonarQube to save reports)
+- Docker (Pushing Succeeded Container Images to be pulled at Deployment)
+- Ansible (Configuration Management for Deployment Environment and Jenkins Slave Nodes)
+- Deployment Environment (Contains needed tools for Deployment )
+- Kubernetes Cluster (for Deploying the app)
 
 ## Instructions for use
 
