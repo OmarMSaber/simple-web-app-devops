@@ -4,7 +4,7 @@ This repo Demonstrates the set up and Deployment of a simple node app using Jenk
 
 # Architecture Diagram
 
-![alt text](https://drive.google.com/file/d/18ALGOf_4FSLUFGbcuMMSxCbrB4RVjKlH/view?usp=sharing)
+![alt text](https://1drv.ms/u/s!AqjajrDrqgzFiQc7Isjm1ltmb0SO)
 
 # Deployment Model
 
